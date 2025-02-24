@@ -7,6 +7,7 @@
     "dev": "node -r dotenv/config --watch server.js --host"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "chalk": "^5.4.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
