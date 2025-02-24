@@ -13,8 +13,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
 
 const getUserById = asyncHandler(async (req, res) => {
     const {id} = req.params;
-    const _id = '67bc6cc5e5989654b8770f2c';
-    const user = id === /*req.user.*/_id
+
+    const user = id === req.user._id
         ? await UserModel.findById(id)
         .select("-password")
         .lean()
@@ -39,4 +39,4 @@ const deleteUserById = () => asyncHandler(async (req, res) => {
         res.json({msg: 'Successfully deleted User', data});
     });
 
-export {getAllUsers, getUserById};
+export {getAllUsers, getUserById, updateUserById, deleteUserById};
