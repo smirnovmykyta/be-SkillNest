@@ -11,7 +11,7 @@ dbInit()
     .then(() => {
         server = app.listen(port, () =>
             console.log(
-                chalk.bgGreen(` SkillNest API listening on port ${port}... `)
+                chalk.cyan(` SkillNest API listening on port ${port}... `)
             )
         );
     })

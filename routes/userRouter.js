@@ -9,7 +9,7 @@ const userRouter = Router();
 userRouter.get("/", getAllUsers);
 
 userRouter
-    .get("/:id", authenticate, getUserById)
+    .get("/:id", getUserById)
     .put("/:id", authenticate, updateOne(UserModel))
     .delete("/:id", authenticate, deleteOne(UserModel));
 
