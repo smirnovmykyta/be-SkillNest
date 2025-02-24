@@ -4,10 +4,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node -r dotenv/config --watch server.js --host"
+    "dev": "node -r dotenv/config --watch server.js --watch"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.2",
+    "bcrypt": "^5.1.1",
     "chalk": "^5.4.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -15,6 +15,7 @@
     "express": "^4.21.2",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.1",
     "morgan": "~1.9.1"
   }
