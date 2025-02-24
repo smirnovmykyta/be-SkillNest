@@ -1,0 +1,19 @@
+{
+  "name": "be-skillnest",
+  "version": "0.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node -r dotenv/config --watch server.js --host"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "mongoose": "^8.10.1",
+    "morgan": "~1.9.1"
+  }
+}
