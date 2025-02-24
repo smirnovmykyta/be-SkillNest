@@ -1,5 +1,5 @@
-import {model, mongoose, Schema} from "mongoose";
-import bcrypt from "bcryptjs"
+import {model, Schema} from "mongoose";
+import bcrypt from "bcrypt"
 import {emailRegex, passwordRegex, phoneNumberRegex} from "../utils/validate/validation.js";
 
 
