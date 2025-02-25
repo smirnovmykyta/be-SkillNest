@@ -1,11 +1,10 @@
 import express from "express";
 import cors from "cors";
-import morgan from "morgan";
-
-import errorHandler from "./utils/errorHandler.js";
-import ErrorResponse from "./utils/ErrorResponse.js";
+import userRouter from "./routes/userRouter.js";
 
 import authRouter from "./routes/authRouter.js";
+import ErrorResponse from "./utils/errorHandlers/ErrorResponse.js";
+import errorHandler from "./utils/errorHandlers/errorHandler.js";
 
 const app = express();
 app.use(cors());
@@ -32,6 +31,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 
 app.use("*", (req, res, next) => {
   next(new ErrorResponse(`Cannot find ${req.originalUrl}`, 404));
