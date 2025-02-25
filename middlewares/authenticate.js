@@ -1,5 +1,5 @@
 import UserModel from "../models/UserModel.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
+import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
 import jwt from "jsonwebtoken";
 
 export default async function authenticate(req, res, next) {

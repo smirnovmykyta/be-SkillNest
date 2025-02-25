@@ -1,24 +1,17 @@
 import UserModel from "../models/UserModel.js";
-import asyncHandler from "../utils/asyncHandler.js";
-import ErrorResponse from "../utils/ErrorResponse.js";
 import bcrypt from "bcrypt";
-import signToken from "../utils/signToken.js";
-import setAuthCookie from "../utils/setAuthCookie.js";
+import signToken from "../utils/token/signToken.js";
+import setAuthCookie from "../utils/token/setAuthCookie.js";
+import asyncHandler from "../utils/errorHandlers/asyncHandler.js";
+import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
 
 const userSignup = asyncHandler(async (req, res) => {
   const { email } = req.body;
-  // console.log("NOA", email, JSON.stringify({ email, password }));
+
   const emailInUse = await UserModel.exists({ email });
   if (emailInUse) throw new ErrorResponse("Email already in use", 409);
 
-  const userMongoose = await UserModel.create(req.body);
-
-  // const user = userMongoose.toObject();
-  // delete user.password;
-
-  // const token = signToken(user._id);
-
-  // setAuthCookie(res, token);
+  await UserModel.create(req.body);
 
   res.status(201).json({ msg: "User registration successfully!" });
 });
@@ -41,9 +34,4 @@ const userLogout = (req, res) => {
   res.json({ msg: "Logout successful" });
 };
 
-// const getMe = (req, res) => {
-//   const { user } = req;
-//   res.json({ user });
-// };
-
-export { userSignup, userLogin, userLogout }; //getMe
+export { userSignup, userLogin, userLogout };
