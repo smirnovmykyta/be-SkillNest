@@ -4,7 +4,7 @@ import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
 
 const getAllUsers = asyncHandler(async (req, res) => {
     const users = await UserModel.find()
-        .select("_id name surname email")
+        .select("_id username email")
         .lean();
 
     if (!users) throw new ErrorResponse("User not found", 404);
@@ -19,7 +19,7 @@ const getUserById = asyncHandler(async (req, res) => {
         .select("-password")
         .lean()
         : await UserModel.findById(id)
-        .select("_id name surname email phoneNumber")
+        .select("_id username email phoneNumber")
         .lean();
 
     if (!user) throw new ErrorResponse("User not found", 404);
@@ -28,7 +28,14 @@ const getUserById = asyncHandler(async (req, res) => {
 
 const updateUserById = () => asyncHandler(async (req, res) => {
         const {id} = req.user._id;
-        const data = await UserModel.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
+        const {uploaded} = req.uploadedFiles;
+        const updateData = {...req.body};
+
+        if (uploaded.length > 0) {
+        updateData.profileImg = [...req.body.profileImg, ...uploaded];
+        }
+
+        const data = await UserModel.findByIdAndUpdate(id, updateData, {runValidators: true, new: true});
         res.json({msg: 'Update successful', data});
     });
 
