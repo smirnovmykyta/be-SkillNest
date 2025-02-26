@@ -13,7 +13,7 @@ import {
 const advertisementRouter = Router();
 
 advertisementRouter.get("/", getAll(AdvertisementModel))
-    .post("/", createOne(AdvertisementModel));
+    .post("/", authenticate, createOne(AdvertisementModel));
 
 advertisementRouter.get('/:id', getOneById(AdvertisementModel))
     .put("/id", authenticate, handleFileUpload, updateAdvertisementById)
