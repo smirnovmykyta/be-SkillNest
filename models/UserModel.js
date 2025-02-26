@@ -66,6 +66,12 @@ const UserSchema = new Schema({
             ref: "Advertisement",
         }
     ],
+    profileImg: [
+        {
+            type: String,
+            default: "https://res.cloudinary.com/dm3bzm6cx/image/upload/default_avatar.webp"
+        },
+    ],
 
 
 },{timestamps: true});

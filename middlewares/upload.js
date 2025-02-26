@@ -24,7 +24,7 @@ const upload = multer({
     limits: { fileSize: ALLOWED_SIZE }
 }).array('files', 10);
 
-const handleFileUpload = (req, res, next) => {
+export const handleFileUpload = (req, res, next) => {
     upload(req, res, (err) => {
         if (err) return res.status(400).json({error: err.message});
 
@@ -36,5 +36,3 @@ const handleFileUpload = (req, res, next) => {
         next();
     });
 };
-
-export default {upload, handleFileUpload};

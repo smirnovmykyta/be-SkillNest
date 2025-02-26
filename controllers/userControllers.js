@@ -28,7 +28,14 @@ const getUserById = asyncHandler(async (req, res) => {
 
 const updateUserById = () => asyncHandler(async (req, res) => {
         const {id} = req.user._id;
-        const data = await UserModel.findByIdAndUpdate(id, req.body, {runValidators: true, new: true});
+        const {uploaded} = req.user.uploadedFiles;
+        const updateData = {...req.body};
+
+        if (uploaded.length > 0) {
+        updateData.profileImg = [...req.body.profileImg, ...uploaded];
+        }
+
+        const data = await UserModel.findByIdAndUpdate(id, updateData, {runValidators: true, new: true});
         res.json({msg: 'Update successful', data});
     });
 
