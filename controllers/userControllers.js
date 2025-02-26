@@ -28,7 +28,7 @@ const getUserById = asyncHandler(async (req, res) => {
 
 const updateUserById = () => asyncHandler(async (req, res) => {
         const {id} = req.user._id;
-        const {uploaded} = req.user.uploadedFiles;
+        const {uploaded} = req.uploadedFiles;
         const updateData = {...req.body};
 
         if (uploaded.length > 0) {
