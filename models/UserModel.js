@@ -19,15 +19,12 @@ const UserSchema = new Schema({
             'Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character.'
         ]
     },
-    name: {
+    username: {
         type: String,
-        required: [true, 'Please provide an name.'],
+        required: [true, 'Please provide an username.'],
         trim: true,
-    },
-    surname: {
-        type: String,
-        required: [true, 'Please provide an surname.'],
-        trim: true,
+        minlength: [4, 'Username must be at least 4 characters long.'],
+        maxlength: [24, 'Username must not exceed 24 characters.'],
     },
     birthday: {
         type: Date,
