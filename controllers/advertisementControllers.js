@@ -1,7 +1,7 @@
 import asyncHandler from "../utils/errorHandlers/asyncHandler.js";
 import AdvertisementModel from "../models/AdvertisementModel.js";
 import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
-import UserModel from "../models/UserModel.js";
+
 
 export const getAllAdvertisementByUserId = () => asyncHandler(async (req, res) => {
     const userId = req.params.id
