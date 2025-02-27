@@ -48,8 +48,8 @@ const AdvertisementSchema = new Schema({
         default: expirationDate(),
     },
     lessonMode: {
-        type: Boolean,
-        enum: ['online', 'offline', 'both'],
+        type: String,
+        enum: ['online', 'in-person', 'both'],
         required: true
     },
     location: {
