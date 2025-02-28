@@ -14,15 +14,15 @@ export const getAllAdvertisementByUserId = () => asyncHandler(async (req, res) =
 
 export const updateAdvertisementById = () => asyncHandler(async (req, res) => {
     const advertisementId = req.params.id
-    const {userId} = req.user._id
-    const {uploaded} = req.uploadedFiles;
+    // const {userId} = req.user._id
+    // const {uploaded} = req.uploadedFiles;
     const updateData = {...req.body};
+    console.log(updateData)
+    // if(updateData.userId !== userId) throw new ErrorResponse("To modify the advertisement, the user must be its author.", 403);
 
-    if(updateData.userId !== userId) throw new ErrorResponse("To modify the advertisement, the user must be its author.", 403);
-
-    if (uploaded.length > 0) {
-        updateData.media = [...req.body.media, ...uploaded];
-    }
+    // if (uploaded.length > 0) {
+    //     updateData.media = [...req.body.media, ...uploaded];
+    // }
 
     const data = await AdvertisementModel.findByIdAndUpdate(advertisementId, updateData, { new: true });
 

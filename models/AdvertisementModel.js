@@ -81,13 +81,12 @@ const AdvertisementSchema = new Schema({
     }]
 }, {timestamps: true});
 
-AdvertisementSchema.pre('find', async function (next) {
-    await this.model.updateMany(
-        { expirationDate: { $lt: new Date() }, active: true },
-        { $set: { active: false } }
-    );
-    next();
-});
+// AdvertisementSchema.pre('find', async function (next) {
+//     await this.model.updateMany(
+//         { expirationDate: { $lt: new Date() }, active: true },
+//         { $set: { active: false } }
+//     ).next();
+// });
 
 const AdvertisementModel = model('Advertisement', AdvertisementSchema);
 
