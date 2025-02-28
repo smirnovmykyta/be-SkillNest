@@ -41,7 +41,14 @@ const AdvertisementSchema = new Schema({
         default: false
     },
     timeAvailability: [{
-        type: Date
+        date: {
+            type: String,
+            trim: true,
+        },
+        time: {
+            type: String,
+            trim: true,
+        }
     }],
     expirationDate: {
         type: Date,
