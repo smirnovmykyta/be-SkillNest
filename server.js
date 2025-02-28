@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import dbInit from "./db/dbinit.js";
+import dbInit from "./db/dbInit.js";
 import app from "./app.js";
 
 const port = process.env.SERVER_PORT || 8000;
