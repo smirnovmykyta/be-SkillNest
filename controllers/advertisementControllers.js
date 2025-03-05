@@ -36,8 +36,7 @@ export const deleteAdvertisementById = asyncHandler(async (req, res) => {
     const userId = req.user;
 
     const advertisement = await AdvertisementModel.findById(advertisementId).lean();
-    console.log(advertisement.userId.toString());
-    console.log(userId);
+
     if(!advertisement) throw new ErrorResponse("Advertisement not found", 404);
     if (advertisement.userId.toString() !== userId) throw new ErrorResponse("To delete the advertisement, the user must be its author.", 403);
 

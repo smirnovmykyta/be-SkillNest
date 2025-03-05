@@ -25,7 +25,6 @@ const upload = multer({
 }).array('files', 10);
 
 export const handleFileUpload = (req, res, next) => {
-    console.log("1111")
     upload(req, res, (err) => {
         if (err) return res.status(400).json({error: err.message});
 
