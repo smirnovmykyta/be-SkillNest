@@ -14,11 +14,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
     const {id} = req.params;
 
-    const user = id === req.user._id
-        ? await UserModel.findById(id)
-        .select("-password")
-        .lean()
-        : await UserModel.findById(id)
+    const user = await UserModel.findById(id)
         .select("_id username email phoneNumber")
         .lean();
 
@@ -26,12 +22,23 @@ const getUserById = asyncHandler(async (req, res) => {
     res.json(user)
 });
 
-const updateUserById = () => asyncHandler(async (req, res) => {
-        const {id} = req.user._id;
+const getProfile = asyncHandler(async (req, res) => {
+    const id = req.user;
+
+    const user = await UserModel.findById(id)
+            .select("-password")
+            .lean()
+
+
+    if (!user) throw new ErrorResponse("User not found", 404);
+    res.json(user)
+});
+
+const updateUserById =  asyncHandler(async (req, res) => {
+        const id = req.user;
         const {uploaded} = req.uploadedFiles;
         const updateData = {...req.body};
-
-        if (uploaded.length > 0) {
+        if (uploaded && uploaded.length > 0) {
         updateData.profileImg = [...req.body.profileImg, ...uploaded];
         }
 
@@ -39,11 +46,11 @@ const updateUserById = () => asyncHandler(async (req, res) => {
         res.json({msg: 'Update successful', data});
     });
 
-const deleteUserById = () => asyncHandler(async (req, res) => {
-        const {id} = req.user._id;
+const deleteUserById = asyncHandler(async (req, res) => {
+        const id = req.user;
         const data = await UserModel.findByIdAndDelete(id);
         if(!data) throw new ErrorResponse("User not found", 404);
         res.json({msg: 'Successfully deleted User', data});
     });
 
-export {getAllUsers, getUserById, updateUserById, deleteUserById};
+export {getAllUsers, getUserById, updateUserById, deleteUserById, getProfile};

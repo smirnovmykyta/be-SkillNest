@@ -1,7 +1,6 @@
 import UserModel from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import signToken from "../utils/token/signToken.js";
-import setAuthCookie from "../utils/token/setAuthCookie.js";
 import asyncHandler from "../utils/errorHandlers/asyncHandler.js";
 import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
 
@@ -24,7 +23,6 @@ const userLogin = asyncHandler(async (req, res) => {
 
   delete user.password;
   const token = signToken(user._id);
-  setAuthCookie(res, token);
 
   res.json({ user, token });
 });
