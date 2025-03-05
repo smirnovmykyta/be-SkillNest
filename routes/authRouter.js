@@ -4,7 +4,8 @@ import {
   userLogin,
   userLogout,
 } from "../controllers/authControllers.js";
-import authenticate from "../middlewares/authenticate.js";
+import {authenticate} from "../middlewares/authenticate.js";
+
 
 const authRouter = Router();
 

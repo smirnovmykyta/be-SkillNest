@@ -1,26 +1,23 @@
 import UserModel from "../models/UserModel.js";
 import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
 import jwt from "jsonwebtoken";
+import asyncHandler from "../utils/errorHandlers/asyncHandler.js";
 
-export default async function authenticate(req, res, next) {
-  let { token } = req.cookies;
-
+export const authenticate = asyncHandler(async (req, res, next) => {
   const { authorization } = req.headers;
+  let token;
+
   if (authorization) {
     token = authorization.split(" ")[1];
   }
 
   if (!token) return next(new ErrorResponse("Not Authenticated", 401));
 
-  try {
     const { userId } = jwt.verify(token, process.env.SECRET);
-    const user = await UserModel.findById(userId).select("email role _id");
-    console.log(user);
+    const user = await UserModel.findById(userId).select("email _id").lean();
+
     if (!user) return next(new ErrorResponse("Not Authenticated", 401));
 
-    req.user = user;
+    req.user = userId;
     next();
-  } catch (error) {
-    next(error);
-  }
-}
+});
