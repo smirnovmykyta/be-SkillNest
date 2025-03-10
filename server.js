@@ -9,7 +9,7 @@ let server;
 
 async function startServer() {
   try {
-    await dbInit(); // Initialisieren der Datenbankverbindung mit mongoose
+    await dbInit();
 
     server = app.listen(port, () =>
       console.log(chalk.cyan(` SkillNest API listening on port ${port}... `))
