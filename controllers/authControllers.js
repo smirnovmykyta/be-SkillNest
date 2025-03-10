@@ -19,8 +19,9 @@ const userSignup = asyncHandler(async (req, res) => {
 const userLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await UserModel.findOne({ email }).select("+password").lean();
+  if(!user) throw new ErrorResponse("No user found with this email.", 404)
   const match = await bcrypt.compare(password, user.password);
-  if (!match) throw new ErrorResponse("Incorrect password", 401);
+  if (!match) throw new ErrorResponse("Wrong password. Please check and try again.", 401);
 
   delete user.password;
   const token = signToken(user._id);
