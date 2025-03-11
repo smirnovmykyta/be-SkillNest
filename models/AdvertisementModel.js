@@ -1,94 +1,103 @@
-import {model, Schema} from "mongoose";
-import {expirationDate} from "../utils/advertisement/expirationDate.js";
+import { model, Schema } from "mongoose";
+import { expirationDate } from "../utils/advertisement/expirationDate.js";
 
-
-const AdvertisementSchema = new Schema({
+const AdvertisementSchema = new Schema(
+  {
     userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     media: [
-        {
-            type: String,
-            default: "https://res.cloudinary.com/dm3bzm6cx/image/upload/default_logo.png"
-        },
+      {
+        type: String,
+        default:
+          "https://res.cloudinary.com/dm3bzm6cx/image/upload/default_logo.png",
+      },
     ],
     title: {
-        type: String,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     offer: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     request: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     category: {
-        type: String,
-        required: true,
-        index: true
+      type: String,
+      required: true,
+      index: true,
     },
     isGroup: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
-    timeAvailability: [{
+    timeAvailability: [
+      {
         date: {
-            type: String,
-            trim: true,
+          type: String,
+          trim: true,
         },
         time: {
-            type: String,
-            trim: true,
-        }
-    }],
+          type: String,
+          trim: true,
+        },
+      },
+    ],
     expirationDate: {
-        type: Date,
-        default: expirationDate(),
+      type: Date,
+      default: expirationDate(),
     },
     lessonMode: {
-        type: String,
-        enum: ['online', 'in-person', 'both'],
-        required: true
+      type: String,
+      enum: ["online", "in-person", "both"],
+      required: true,
     },
     location: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     active: {
-        type: Boolean,
-        default: true
+      type: Boolean,
+      default: true,
     },
-    languages: [{
+    languages: [
+      {
         language: {
-            type: String,
-            required: true,
-            trim: true
+          type: String,
+          required: true,
+          trim: true,
         },
         qualification: {
-            type: String,
-            enum: ['native', 'certified', 'fluent', 'intermediate', 'beginner'],
-            required: true
-        }
-    }],
+          type: String,
+          enum: ["native", "certified", "fluent", "intermediate", "beginner"],
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-}, {timestamps: true});
+AdvertisementSchema.index({ title: "text", description: "text" });
 
-AdvertisementSchema.pre('find', async function (next) {
-    await this.model.updateMany(
-        { expirationDate: { $lt: new Date() }, active: true },
-        { $set: { active: false } }
-    )
-    next();
+AdvertisementSchema.pre("find", async function (next) {
+  await this.model.updateMany(
+    { expirationDate: { $lt: new Date() }, active: true },
+    { $set: { active: false } }
+  );
+  next();
 });
 
-const AdvertisementModel = model('Advertisement', AdvertisementSchema);
+const AdvertisementModel = model("Advertisement", AdvertisementSchema);
 
 export default AdvertisementModel;
