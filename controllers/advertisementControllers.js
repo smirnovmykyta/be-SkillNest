@@ -1,6 +1,7 @@
 import asyncHandler from "../utils/errorHandlers/asyncHandler.js";
 import AdvertisementModel from "../models/AdvertisementModel.js";
 import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
+import UserModel from "../models/UserModel.js";
 
 export const getAllAdvertisementByUserId = asyncHandler(async (req, res) => {
   const userId = req.params.id;
@@ -12,8 +13,9 @@ export const getAllAdvertisementByUserId = asyncHandler(async (req, res) => {
 });
 
 export const createAdvertisement = asyncHandler(async (req, res) => {
-  // Don't trust the user to set themselves as the author. Always override the author with the session user.
-  const ad = { ...req.body, userId: req.user };
+  const username = await UserModel.findById(req.user).select("username").lean();
+  const ad = { ...req.body, userId: req.user, username };
+
   const resData = await AdvertisementModel.create(ad);
   res.status(201).json(resData);
 });
