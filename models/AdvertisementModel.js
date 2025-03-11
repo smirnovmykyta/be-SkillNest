@@ -13,13 +13,11 @@ const AdvertisementSchema = new Schema(
             trim: true,
 
         },
-        media: [
-            {
-                type: String,
+        media: {
+                type: [String],
                 default:
-                    "https://res.cloudinary.com/dm3bzm6cx/image/upload/default_logo.png",
+                    ["https://res.cloudinary.com/dm3bzm6cx/image/upload/default_logo.png"],
             },
-        ],
         description: {
             type: String,
             required: true,

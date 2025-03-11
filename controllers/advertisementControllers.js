@@ -14,7 +14,7 @@ export const getAllAdvertisementByUserId = asyncHandler(async (req, res) => {
 
 export const createAdvertisement = asyncHandler(async (req, res) => {
   const username = await UserModel.findById(req.user).select("username").lean();
-  const ad = { ...req.body, userId: req.user, username };
+  const ad = { ...req.body, userId: req.user, username: username.username };
 
   const resData = await AdvertisementModel.create(ad);
   res.status(201).json(resData);

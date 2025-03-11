@@ -32,24 +32,29 @@ const UserSchema = new Schema(
     },
     birthday: {
       type: Date,
+        default: null,
     },
     phoneNumber: {
       type: String,
       match: [phoneNumberRegex, "Invalid phone number."],
+        default: "",
     },
     address: {
       street: {
         type: String,
         trim: true,
+          default: "",
       },
       houseNumber: {
         type: String,
         trim: true,
+          default: "",
       },
       postalCode: {
         type: Number,
         min: [10000, "The zip code must have 5 digits."],
         max: [99999, "The postal code can have a maximum of 5 digits."],
+          default: "",
       },
     },
     userAdvertisements: [
@@ -64,13 +69,11 @@ const UserSchema = new Schema(
         ref: "Advertisement",
       },
     ],
-    profileImg: [
-      {
+    profileImg: {
         type: String,
         default:
           "https://res.cloudinary.com/dm3bzm6cx/image/upload/default_avatar.webp",
       },
-    ],
   },
   { timestamps: true }
 );

@@ -6,9 +6,9 @@ import ErrorResponse from "../utils/errorHandlers/ErrorResponse.js";
 
 const userSignup = asyncHandler(async (req, res) => {
   const { email } = req.body;
-  console.log(req.body);
+
   const emailInUse = await UserModel.exists({ email });
-  console.log("email in use?", email, emailInUse);
+
   if (emailInUse) throw new ErrorResponse("Email already in use", 409);
 
   await UserModel.create(req.body);
